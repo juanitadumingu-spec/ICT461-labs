@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Course Registration</title>
+<style>
+  :root {
+    --bg: #f5f7fb;
+    --card-bg: #ffffff;
+    --text: #1a1a2e;
+    --muted: #5a5f73;
+    --accent: #2952e3;
+    --accent-dark: #1c3bb0;
+    --error: #c92a2a;
+    --border: #d7dbe6;
+    --focus: #2952e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1220;
+      --card-bg: #181c2e;
+      --text: #eef0f7;
+      --muted: #a2a7bd;
+      --accent: #6d8bff;
+      --accent-dark: #8aa2ff;
+      --error: #ff6b6b;
+      --border: #2c3150;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1220;
+    --card-bg: #181c2e;
+    --text: #eef0f7;
+    --muted: #a2a7bd;
+    --accent: #6d8bff;
+    --accent-dark: #8aa2ff;
+    --error: #ff6b6b;
+    --border: #2c3150;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2rem 1rem;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+  }
+  main {
+    width: 100%;
+    max-width: 560px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    margin: 0 0 0.25rem;
+  }
+  p.subtitle {
+    color: var(--muted);
+    margin: 0 0 1.75rem;
+    font-size: 0.95rem;
+  }
+  .field {
+    margin-bottom: 1.25rem;
+  }
+  label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+  .required-mark {
+    color: var(--error);
+    margin-left: 2px;
+  }
+  input, select {
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    font-size: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+  }
+  input:focus, select:focus {
+    outline: 2px solid var(--focus);
+    outline-offset: 1px;
+  }
+  input:invalid:not(:placeholder-shown),
+  select:invalid {
+    /* only style as invalid after user interaction via JS class, not native pseudo,
+       to avoid flashing red before the user has tried the field */
+  }
+  .field.invalid input,
+  .field.invalid select {
+    border-color: var(--error);
+  }
+  .hint {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+  }
+  .error-message {
+    font-size: 0.8rem;
+    color: var(--error);
+    margin-top: 0.35rem;
+    display: none;
+  }
+  .field.invalid .error-message {
+    display: block;
+  }
+  button[type="submit"] {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--accent);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+  }
+  button[type="submit"]:hover {
+    background: var(--accent-dark);
+  }
+  #form-status {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  #form-status.success {
+    color: #2b8a3e;
+  }
+  #form-status.error-summary {
+    color: var(--error);
+  }
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <h1>Course Registration</h1>
+    <p class="subtitle">Fields marked <span class="required-mark">*</span> are required.</p>
+
+    <form id="registration-form" method="post" action="/register" novalidate>
+      <fieldset>
+        <legend style="position:absolute; left:-9999px;">Course registration details</legend>
+
+        <div class="field" data-field="fullName">
+          <label for="fullName">Full name<span class="required-mark">*</span></label>
+          <input
+            type="text"
+            id="fullName"
+            name="fullName"
+            autocomplete="name"
+            required
+            minlength="2"
+            aria-describedby="fullName-error"
+          >
+          <p class="error-message" id="fullName-error" role="alert">Please enter your full name (at least 2 characters).</p>
+        </div>
+
+        <div class="field" data-field="studentId">
+          <label for="studentId">Student ID<span class="required-mark">*</span></label>
+          <input
+            type="text"
+            id="studentId"
+            name="studentId"
+            autocomplete="off"
+            required
+            pattern="[A-Za-z0-9]{6,10}"
+            inputmode="text"
+            aria-describedby="studentId-hint studentId-error"
+          >
+          <p class="hint" id="studentId-hint">6–10 letters/numbers, no spaces.</p>
+          <p class="error-message" id="studentId-error" role="alert">Student ID must be 6–10 letters or numbers.</p>
+        </div>
+
+        <div class="field" data-field="programme">
+          <label for="programme">Programme<span class="required-mark">*</span></label>
+          <select id="programme" name="programme" required aria-describedby="programme-error">
+            <option value="" disabled selected>Select a programme…</option>
+            <option value="cs">Computer Science</option>
+            <option value="business">Business Administration</option>
+            <option value="engineering">Engineering</option>
+            <option value="health-sciences">Health Sciences</option>
+            <option value="law">Law</option>
+          </select>
+          <p class="error-message" id="programme-error" role="alert">Please select your programme.</p>
+        </div>
+
+        <div class="field" data-field="course">
+          <label for="course">Course<span class="required-mark">*</span></label>
+          <select id="course" name="course" required aria-describedby="course-error">
+            <option value="" disabled selected>Select a course…</option>
+            <option value="cs101">CS101 – Intro to Programming</option>
+            <option value="cs201">CS201 – Data Structures</option>
+            <option value="bus110">BUS110 – Principles of Management</option>
+            <option value="eng150">ENG150 – Statics</option>
+            <option value="law120">LAW120 – Contract Law</option>
+          </select>
+          <p class="error-message" id="course-error" role="alert">Please select a course.</p>
+        </div>
+
+        <div class="field" data-field="email">
+          <label for="email">Email<span class="required-mark">*</span></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+            required
+            aria-describedby="email-error"
+          >
+          <p class="error-message" id="email-error" role="alert">Please enter a valid email address.</p>
+        </div>
+
+      </fieldset>
+
+      <button type="submit">Register</button>
+      <p id="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</main>
+
+<script>
+(function () {
+  const form = document.getElementById('registration-form');
+  const status = document.getElementById('form-status');
+
+  const fields = ['fullName', 'studentId', 'programme', 'course', 'email'];
+
+  function validateField(id) {
+    const el = document.getElementById(id);
+    const wrapper = el.closest('.field');
+    const isValid = el.checkValidity();
+    wrapper.classList.toggle('invalid', !isValid);
+    return isValid;
+  }
+
+  fields.forEach(function (id) {
+    const el = document.getElementById(id);
+    el.addEventListener('blur', function () { validateField(id); });
+    el.addEventListener('input', function () {
+      // clear the error as soon as it becomes valid again
+      if (el.checkValidity()) {
+        el.closest('.field').classList.remove('invalid');
+      }
+    });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    let allValid = true;
+    fields.forEach(function (id) {
+      if (!validateField(id)) allValid = false;
+    });
+
+    if (!allValid) {
+      status.textContent = 'Please fix the highlighted fields before submitting.';
+      status.className = 'error-summary';
+      const firstInvalid = form.querySelector('.field.invalid input, .field.invalid select');
+      if (firstInvalid) firstInvalid.focus();
+      return;
+    }
+
+    status.textContent = 'registration successful!';
+    status.className = 'success';
+    // form.submit(); // would actually POST to the server here
+  });
+})();
+</script>
+</body>
+</html>
