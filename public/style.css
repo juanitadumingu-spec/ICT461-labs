@@ -1,0 +1,318 @@
+/* ---------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------- */
+:root {
+  --navy: #1f3864;
+  --navy-dark: #16294a;
+  --paper: #fafafa;
+  --ink: #22262b;
+  --muted: #5c6570;
+  --border: #d7dce2;
+  --accent: #2f7a4f;
+  --error: #a3271f;
+  --error-bg: #fdecea;
+  --success-bg: #eaf6ee;
+  --focus: #1a5fd6;
+  --radius: 6px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: 1rem;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.5;
+}
+
+.wrap {
+  max-width: 760px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Visible keyboard focus everywhere — never remove this without a replacement. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------------
+   Header / nav
+--------------------------------------------------------------------- */
+.site-header {
+  background: var(--navy);
+  color: white;
+}
+
+.header-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-block: 0.9rem;
+}
+
+.site-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  color: #dbe6f7;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.nav-list a:hover,
+.nav-list a:focus-visible {
+  color: white;
+  text-decoration: underline;
+}
+
+/* Two-column header once there is room for it. */
+@media (min-width: 640px) {
+  .header-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Layout / sections
+--------------------------------------------------------------------- */
+main {
+  padding-block: 2rem 3rem;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin-block: 0 0.4rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-block: 0 0.6rem;
+  color: var(--navy-dark);
+}
+
+h3 {
+  font-size: 1rem;
+  margin-block: 0 0.4rem;
+}
+
+.lede {
+  color: var(--muted);
+  margin-block: 0 1.75rem;
+  max-width: 60ch;
+}
+
+section {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-block-end: 1.5rem;
+  background: white;
+}
+
+section p {
+  max-width: 68ch;
+}
+
+/* ---------------------------------------------------------------------
+   Form — Flexbox layout, stacked on narrow screens
+--------------------------------------------------------------------- */
+#registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 32rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.field label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.field input,
+.field select {
+  font: inherit;
+  padding: 0.55rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: white;
+  color: var(--ink);
+  width: 100%;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: var(--focus);
+}
+
+/* Side-by-side fields once there is enough width (tested at 1366px). */
+@media (min-width: 700px) {
+  #registration-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1.25rem;
+    row-gap: 1rem;
+    max-width: 42rem;
+  }
+
+  #registration-form button,
+  #registration-form #form-status {
+    grid-column: 1 / -1;
+  }
+}
+
+button {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--navy);
+  border-radius: var(--radius);
+  background: var(--navy);
+  color: white;
+  cursor: pointer;
+  width: fit-content;
+}
+
+button:hover {
+  background: var(--navy-dark);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background: white;
+  color: var(--navy);
+}
+
+button.secondary:hover {
+  background: #eef2f8;
+}
+
+#form-status {
+  margin: 0;
+  font-size: 0.95rem;
+  min-height: 1.3em;
+}
+
+#form-status.is-error {
+  color: var(--error);
+  background: var(--error-bg);
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius);
+}
+
+#form-status.is-success {
+  color: #205a35;
+  background: var(--success-bg);
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius);
+}
+
+/* ---------------------------------------------------------------------
+   Diagnostics panel
+--------------------------------------------------------------------- */
+.diagnostic-group {
+  margin-block-end: 1.25rem;
+}
+
+.diagnostic-group:last-child {
+  margin-block-end: 0;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-block-end: 0.6rem;
+}
+
+.button-row button {
+  background: white;
+  color: var(--navy);
+}
+
+.button-row button:hover {
+  background: #eef2f8;
+}
+
+.output {
+  background: #10151d;
+  color: #d7e3f2;
+  padding: 0.85rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 0.85rem;
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ---------------------------------------------------------------------
+   Footer
+--------------------------------------------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding-block: 1.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.site-footer p {
+  margin: 0.2rem 0;
+}
+
+/* Never let content overflow horizontally, at any width. */
+img,
+pre,
+table {
+  max-width: 100%;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}

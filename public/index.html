@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Course Registration — Mulungushi University</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <p class="site-title">Mulungushi University</p>
+      <nav aria-label="Primary">
+        <ul class="nav-list">
+          <li><a href="#register">Register</a></li>
+          <li><a href="#diagnostics">Diagnostics</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1>Course registration portal</h1>
+    <p class="lede">
+      Register for a course below. Fields marked <span aria-hidden="true">*</span>
+      <span class="visually-hidden">required</span> must be completed.
+    </p>
+
+    <section id="register" aria-labelledby="register-heading">
+      <h2 id="register-heading">New registration</h2>
+
+      <form id="registration-form" novalidate>
+        <div class="field">
+          <label for="name">Full name <span aria-hidden="true">*</span></label>
+          <input type="text" id="name" name="name" required minlength="2" autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="studentId">Student ID <span aria-hidden="true">*</span></label>
+          <input type="text" id="studentId" name="studentId" required minlength="4" autocomplete="off" />
+        </div>
+
+        <div class="field">
+          <label for="programme">Programme <span aria-hidden="true">*</span></label>
+          <select id="programme" name="programme" required>
+            <option value="">Select a programme</option>
+            <option value="BSc Computer Science">BSc Computer Science</option>
+            <option value="BSc Information Technology">BSc Information Technology</option>
+            <option value="BEng Electrical Engineering">BEng Electrical Engineering</option>
+            <option value="BSc Mathematics">BSc Mathematics</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="course">Course <span aria-hidden="true">*</span></label>
+          <select id="course" name="course" required>
+            <option value="">Loading courses…</option>
+          </select>
+        </div>
+
+        <button type="submit" id="submit-button">Register</button>
+
+        <p id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="storage-note" aria-labelledby="storage-heading">
+      <h2 id="storage-heading">About your saved preference</h2>
+      <p>
+        Your last chosen programme is remembered in <code>localStorage</code> so the
+        dropdown pre-fills next time you open this page — even after closing the
+        browser entirely. <code>sessionStorage</code> would behave differently: it
+        would be cleared as soon as this browser tab is closed, and it is never
+        shared between tabs even on the same page. Nothing else you type is stored.
+      </p>
+      <p id="preference-status"></p>
+      <button type="button" id="clear-preference">Clear saved preference</button>
+    </section>
+
+    <section id="diagnostics" aria-labelledby="diagnostics-heading">
+      <h2 id="diagnostics-heading">Diagnostics</h2>
+      <p>
+        These buttons exist to make the request/response cycle visible in DevTools
+        while working through Tasks 2–4. None of this is required for a student to
+        register — it is here to demonstrate the underlying HTTP behaviour.
+      </p>
+
+      <div class="diagnostic-group">
+        <h3>Request body inspection (Task 2.3)</h3>
+        <div class="button-row">
+          <button type="button" id="inspect-json">Send JSON to /inspect</button>
+          <button type="button" id="inspect-form">Send form-encoded to /inspect</button>
+        </div>
+        <pre id="inspect-output" class="output" aria-live="polite">No request sent yet.</pre>
+      </div>
+
+      <div class="diagnostic-group">
+        <h3>Cookie demonstration (Task 4.1) — not a login system</h3>
+        <div class="button-row">
+          <button type="button" id="set-cookie">Set demo cookie</button>
+          <button type="button" id="check-cookie">Check who-am-i</button>
+        </div>
+        <pre id="cookie-output" class="output" aria-live="polite">No request sent yet.</pre>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-heading">
+      <h2 id="about-heading">About this build</h2>
+      <p>
+        The interface runs on <code>http://localhost:5500</code> and talks to a
+        separate Express API on <code>http://localhost:3000</code>. Every write
+        (register, update, delete) is validated again on the server, independently
+        of anything this page checks first — open DevTools, submit a request that
+        bypasses this form, and the API still rejects invalid data.
+      </p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Mulungushi University · School of Engineering and Technology · Department of Computer Science and IT</p>
+      <p>ICT461 — Web Standards and HTTP Fundamentals</p>
+    </div>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

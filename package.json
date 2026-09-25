@@ -1,0 +1,19 @@
+{
+  "name": "ict461-course-registration-lab",
+  "version": "1.0.0",
+  "description": "Mulungushi University course registration portal - ICT461 Web Standards and HTTP Fundamentals lab",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start:api": "node server.js",
+    "start:web": "live-server public --port=5500 --no-browser --entry-file=index.html",
+    "dev": "concurrently -n API,WEB -c blue,green \"npm:start:api\" \"npm:start:web\""
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "live-server": "^1.2.2"
+  }
+}
